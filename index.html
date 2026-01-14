@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Miracle | Vibe Coder & Prompt Engineer</title>
+    <meta name="description"
+        content="Bridging the gap between human intent and AI execution. Building intelligent systems through the art of the prompt." />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- React & ReactDOM CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+    <!-- Framer Motion CDN -->
+    <script src="https://unpkg.com/framer-motion@11.0.3/dist/framer-motion.js"></script>
+
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        midnight: {
+                            900: '#0a0a0f',
+                            800: '#0f0f18',
+                            700: '#151520',
+                            600: '#1a1a28',
+                        },
+                        'electric-indigo': {
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                        },
+                        'emerald-accent': {
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'gradient-shift': 'gradient-shift 8s ease infinite',
+                        'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'typewriter': 'typewriter 3s steps(50) forwards',
+                        'blink': 'blink 1s step-end infinite',
+                    },
+                },
+            },
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: #0a0a0f;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Gradient Background */
+        @keyframes gradient-shift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes glow-pulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes typewriter {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+
+            from,
+            to {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-hover:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 0 40px rgba(99, 102, 241, 0.15);
+        }
+
+        /* Glow Effects */
+        .glow-indigo {
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .glow-emerald {
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .link-glow:hover {
+            text-shadow: 0 0 20px currentColor;
+        }
+
+        /* Animated Background Mesh */
+        .mesh-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(at 40% 20%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+                radial-gradient(at 80% 50%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
+                radial-gradient(at 80% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
+                linear-gradient(180deg, #0a0a0f 0%, #0f0f18 100%);
+            animation: gradient-shift 8s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        /* Starfield */
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: glow-pulse 3s ease-in-out infinite;
+        }
+
+        /* Bento Grid */
+        .bento-grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 768px) {
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Terminal */
+        .terminal {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(15, 15, 24, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { motion, useInView, useAnimation } = window.Motion;
+        const { useState, useEffect, useRef } = React;
+
+        // Starfield Background Component
+        const Starfield = () => {
+            const [stars, setStars] = useState([]);
+            const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+            useEffect(() => {
+                const generateStars = () => {
+                    const newStars = [];
+                    for (let i = 0; i < 100; i++) {
+                        newStars.push({
+                            id: i,
+                            x: Math.random() * 100,
+                            y: Math.random() * 100,
+                            size: Math.random() * 2 + 1,
+                            delay: Math.random() * 5,
+                            duration: Math.random() * 3 + 2,
+                        });
+                    }
+                    setStars(newStars);
+                };
+                generateStars();
+
+                const handleMouseMove = (e) => {
+                    setMousePos({
+                        x: (e.clientX / window.innerWidth - 0.5) * 20,
+                        y: (e.clientY / window.innerHeight - 0.5) * 20,
+                    });
+                };
+
+                window.addEventListener('mousemove', handleMouseMove);
+                return () => window.removeEventListener('mousemove', handleMouseMove);
+            }, []);
+
+            return (
+                <div className="mesh-gradient">
+                    {stars.map((star) => (
+                        <motion.div
+                            key={star.id}
+                            className="star"
+                            style={{
+                                left: `${star.x}%`,
+                                top: `${star.y}%`,
+                                width: star.size,
+                                height: star.size,
+                            }}
+                            animate={{
+                                x: mousePos.x * (star.size / 2),
+                                y: mousePos.y * (star.size / 2),
+                                opacity: [0.2, 0.8, 0.2],
+                            }}
+                            transition={{
+                                x: { duration: 0.5, ease: "easeOut" },
+                                y: { duration: 0.5, ease: "easeOut" },
+                                opacity: {
+                                    duration: star.duration,
+                                    repeat: Infinity,
+                                    delay: star.delay,
+                                },
+                            }}
+                        />
+                    ))}
+                </div>
+            );
+        };
+
+        // Section Animation Wrapper
+        const AnimatedSection = ({ children, className = "", delay = 0 }) => {
+            const ref = useRef(null);
+            const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+            return (
+                <motion.div
+                    ref={ref}
+                    initial={{ opacity: 0, y: 60 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+                    transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }}
+                    className={className}
+                >
+                    {children}
+                </motion.div>
+            );
+        };
+
+        // Hero Section
+        const Hero = () => {
+            return (
+                <section className="min-h-screen flex items-center justify-center px-6 py-20">
+                    <div className="max-w-4xl text-center">
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                            <span className="inline-block px-4 py-1.5 mb-6 text-sm font-medium text-emerald-accent-400 bg-emerald-accent-500/10 border border-emerald-accent-500/20 rounded-full">
+                                🚀 Available for AI Projects
+                            </span>
+                        </motion.div>
+
+                        <motion.h1
+                            className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                            <span className="bg-gradient-to-r from-white via-electric-indigo-400 to-emerald-accent-400 bg-clip-text text-transparent">
+                                The Vibe Coder
+                            </span>
+                            <br />
+                            <span className="text-white/90">&amp; Prompt Engineer.</span>
+                        </motion.h1>
+
+                        <motion.p
+                            className="text-lg md:text-xl text-white/60 mb-10 max-w-2xl mx-auto leading-relaxed"
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                            Bridging the gap between <span className="text-electric-indigo-400">human intent</span> and <span className="text-emerald-accent-400">AI execution</span>.
+                            Building intelligent systems through the art of the prompt.
+                        </motion.p>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                            <a
+                                href="#projects"
+                                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-electric-indigo-500 to-electric-indigo-600 text-white font-semibold rounded-xl shadow-lg shadow-electric-indigo-500/25 hover:shadow-electric-indigo-500/40 hover:scale-105 transition-all duration-300"
+                            >
+                                <span>View My Lab</span>
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                                </svg>
+                            </a>
+                        </motion.div>
+                    </div>
+                </section>
+            );
+        };
+
+        // Project Card
+        const ProjectCard = ({ title, description, link, index, gradient }) => {
+            const ref = useRef(null);
+            const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+            return (
+                <motion.a
+                    ref={ref}
+                    href={link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block glass glass-hover rounded-2xl p-6 md:p-8 transition-all duration-500"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+                    transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    whileHover={{ scale: 1.02, y: -5 }}
+                >
+                    <div className={`w-12 h-12 rounded-xl mb-5 flex items-center justify-center ${gradient}`}>
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+
+                    <h3 className="text-xl md:text-2xl font-semibold mb-3 text-white group-hover:text-electric-indigo-400 transition-colors">
+                        {title}
+                    </h3>
+
+                    <p className="text-white/50 leading-relaxed mb-5 text-sm md:text-base">
+                        {description}
+                    </p>
+
+                    <div className="flex items-center gap-2 text-emerald-accent-400 font-medium text-sm group-hover:gap-4 transition-all">
+                        <span>View Project</span>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </div>
+                </motion.a>
+            );
+        };
+
+        // Projects Section
+        const Projects = () => {
+            const projects = [
+                {
+                    title: "AI-Powered Financial Wellness App",
+                    description: "An intelligent expense tracker powered by the Gemini API. Features AI-driven spending analysis, a conversational financial assistant, and DALL-E/Gemini image generation for expense visualization.",
+                    link: "https://ai-powered-expense-tracker-sage.vercel.app/",
+                    gradient: "bg-gradient-to-br from-electric-indigo-500 to-electric-indigo-600",
+                },
+                {
+                    title: "Universal File Converter & Analyzer",
+                    description: "Beyond simple conversion. A PDF/Doc utility enhanced with Gemini AI for content summarization, complex queries via 'Thinking Mode,' and AI image synthesis.",
+                    link: "https://miracle-ebalukhota.vercel.app/",
+                    gradient: "bg-gradient-to-br from-emerald-accent-500 to-emerald-accent-600",
+                },
+                {
+                    title: "Reformed Theology Explorer",
+                    description: "A comprehensive, AI-powered explorer for historical Reformed Confessions, Catechisms, and Creeds. Merging historical theology with modern LLM analysis.",
+                    link: "https://miraclereformed.netlify.app/",
+                    gradient: "bg-gradient-to-br from-purple-500 to-purple-600",
+                },
+                {
+                    title: "Smart Expense Tracker",
+                    description: "A streamlined, high-utility financial dashboard focusing on rapid entry and data visualization. A masterclass in clean UI and intuitive user flows.",
+                    link: "https://miraclefinancialapp.netlify.app/",
+                    gradient: "bg-gradient-to-br from-pink-500 to-pink-600",
+                },
+            ];
+
+            return (
+                <section id="projects" className="px-6 py-24">
+                    <div className="max-w-6xl mx-auto">
+                        <AnimatedSection className="text-center mb-16">
+                            <h2 className="text-3xl md:text-5xl font-bold mb-4">
+                                <span className="bg-gradient-to-r from-electric-indigo-400 to-emerald-accent-400 bg-clip-text text-transparent">
+                                    The Lab
+                                </span>
+                            </h2>
+                            <p className="text-white/50 text-lg max-w-xl mx-auto">
+                                AI-powered applications built with intention and precision
+                            </p>
+                        </AnimatedSection>
+
+                        <div className="bento-grid">
+                            {projects.map((project, index) => (
+                                <ProjectCard key={index} {...project} index={index} />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // Vibe Stack Section
+        const VibeStack = () => {
+            const tools = [
+                { name: "Gemini API", icon: "✨" },
+                { name: "Vibe Coding", icon: "🎵" },
+                { name: "Prompt Engineering", icon: "💬" },
+                { name: "React", icon: "⚛️" },
+                { name: "Tailwind CSS", icon: "🎨" },
+                { name: "AI Studio", icon: "🧠" },
+            ];
+
+            return (
+                <section className="px-6 py-24">
+                    <div className="max-w-4xl mx-auto">
+                        <AnimatedSection className="text-center mb-12">
+                            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                                <span className="text-white">The </span>
+                                <span className="bg-gradient-to-r from-electric-indigo-400 to-emerald-accent-400 bg-clip-text text-transparent">
+                                    Vibe Stack
+                                </span>
+                            </h2>
+                            <p className="text-white/50">Tools of the trade</p>
+                        </AnimatedSection>
+
+                        <AnimatedSection delay={0.2}>
+                            <div className="flex flex-wrap justify-center gap-4">
+                                {tools.map((tool, index) => (
+                                    <motion.div
+                                        key={tool.name}
+                                        className="glass glass-hover px-6 py-3 rounded-full flex items-center gap-3 cursor-default"
+                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.4, delay: index * 0.08 }}
+                                        whileHover={{ scale: 1.05, y: -2 }}
+                                    >
+                                        <span className="text-xl">{tool.icon}</span>
+                                        <span className="font-medium text-white/80">{tool.name}</span>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </AnimatedSection>
+                    </div>
+                </section>
+            );
+        };
+
+        // Terminal Footer
+        const Terminal = () => {
+            const [displayText, setDisplayText] = useState("");
+            const fullText = "> miracle --mode vibe-coder --execute portfolio.build()";
+            const ref = useRef(null);
+            const isInView = useInView(ref, { once: true });
+
+            useEffect(() => {
+                if (isInView) {
+                    let i = 0;
+                    const interval = setInterval(() => {
+                        if (i <= fullText.length) {
+                            setDisplayText(fullText.slice(0, i));
+                            i++;
+                        } else {
+                            clearInterval(interval);
+                        }
+                    }, 50);
+                    return () => clearInterval(interval);
+                }
+            }, [isInView]);
+
+            return (
+                <section className="px-6 py-24" ref={ref}>
+                    <div className="max-w-3xl mx-auto">
+                        <AnimatedSection>
+                            <div className="terminal">
+                                <div className="terminal-header">
+                                    <div className="terminal-dot bg-red-500"></div>
+                                    <div className="terminal-dot bg-yellow-500"></div>
+                                    <div className="terminal-dot bg-green-500"></div>
+                                    <span className="ml-4 text-white/40 text-sm">miracle@vibe-coder ~ </span>
+                                </div>
+                                <div className="p-6">
+                                    <div className="flex items-center">
+                                        <span className="text-emerald-accent-400 font-mono">
+                                            {displayText}
+                                        </span>
+                                        <span className="w-2 h-5 bg-emerald-accent-400 ml-1 cursor-blink"></span>
+                                    </div>
+                                    {displayText === fullText && (
+                                        <motion.div
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ delay: 0.5 }}
+                                            className="mt-4 text-white/40 font-mono text-sm"
+                                        >
+                                            ✓ Portfolio compiled successfully.<br />
+                                            ✓ Deployed to the cosmos.
+                                        </motion.div>
+                                    )}
+                                </div>
+                            </div>
+                        </AnimatedSection>
+                    </div>
+                </section>
+            );
+        };
+
+        // Footer
+        const Footer = () => {
+            return (
+                <footer className="px-6 py-12 border-t border-white/5">
+                    <div className="max-w-6xl mx-auto text-center">
+                        <p className="text-white/30 text-sm">
+                            © 2026 Miracle. Built with <span className="text-electric-indigo-400">vibes</span> and <span className="text-emerald-accent-400">intention</span>.
+                        </p>
+                    </div>
+                </footer>
+            );
+        };
+
+        // Main App
+        const App = () => {
+            return (
+                <>
+                    <Starfield />
+                    <main className="relative z-10">
+                        <Hero />
+                        <Projects />
+                        <VibeStack />
+                        <Terminal />
+                        <Footer />
+                    </main>
+                </>
+            );
+        };
+
+        // Render
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
